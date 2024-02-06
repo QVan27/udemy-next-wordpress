@@ -1,17 +1,46 @@
 import React from 'react'
 import client from 'client';
 import { gql } from '@apollo/client';
+import { cleanAndTransformBlocks } from 'utils/cleanAndTransformBlocks';
+import { BlockRenderer } from 'components/BlockRenderer';
 
 export default function Page(props) {
   console.log('PAGE PROPS: ', props)
   return (
-    <div>Page</div>
+    <div>
+      <BlockRenderer blocks={props.blocks} />
+    </div>
   )
 }
 
-export const getStaticProps = async () => {
+export const getStaticProps = async (ctx) => {
+  console.log('CONTEXT: ', ctx)
+  const uri = `/${ctx.params.slug.join('/')}/`;
+  console.log('URI: ', uri)
+  const { data } = await client.query({
+    query: gql`
+      query PageQuery($uri: String!) {
+        nodeByUri(uri: $uri) {
+          ... on Page {
+            id
+            title
+            blocksJSON
+          }
+        }
+      }
+    `,
+    variables: {
+      uri
+    }
+  });
+
+  const blocks = cleanAndTransformBlocks(data.nodeByUri.blocksJSON);
+
   return {
-    props: {}
+    props: {
+      title: data.nodeByUri.title,
+      blocks
+    },
   };
 }
 
