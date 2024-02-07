@@ -3,6 +3,7 @@ import { Heading } from "components/Heading";
 import { Paragraph } from 'components/Paragraph';
 import { CallToActionButton } from 'components/CallToActionButton';
 import { theme } from 'theme';
+import { Columns } from 'components/Columns';
 
 export const BlockRenderer = ({ blocks }) => {
   return blocks.map(block => {
@@ -42,6 +43,16 @@ export const BlockRenderer = ({ blocks }) => {
           <Cover key={block.id} background={block.attributes.url}>
             <BlockRenderer blocks={block.innerBlocks} />
           </Cover>
+        )
+      }
+      case "core/columns": {
+        return (
+          <Columns
+            key={block.id}
+            isStackOnMobile={block.attributes.isStackOnMobile}
+          >
+            <BlockRenderer blocks={block.innerBlocks} />
+          </Columns>
         )
       }
       default: {
