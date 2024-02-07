@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { Results } from './Results';
 import { Pagination } from './Pagination';
 import queryString from 'query-string';
+import { Filters } from './Filters';
 
 export const PropertySearch = () => {
   const [properties, setProperties] = useState([])
@@ -37,6 +38,7 @@ export const PropertySearch = () => {
 
   return (
     <div>
+      <Filters />
       <Results properties={properties} />
       <Pagination onPageClick={handlePageClick} totalPages={Math.ceil(totalResults / pageSize)} />
     </div>
