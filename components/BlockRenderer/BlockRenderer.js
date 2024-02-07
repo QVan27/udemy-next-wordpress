@@ -1,11 +1,22 @@
 import { Cover } from "components/Cover";
 import { Heading } from "components/Heading";
 import { Paragraph } from 'components/Paragraph';
+import { CallToActionButton } from 'components/CallToActionButton';
 import { theme } from 'theme';
 
 export const BlockRenderer = ({ blocks }) => {
   return blocks.map(block => {
     switch (block.name) {
+      case "acf/ctabutton": {
+        return (
+          <CallToActionButton
+            key={block.id}
+            buttonLabel={block.attributes.data.label}
+            buttonDestination={block.attributes.data.destination || '/'}
+            buttonAlign={block.attributes.data.align}
+          />
+        )
+      }
       case "core/paragraph": {
         return (
           <Paragraph
@@ -27,15 +38,16 @@ export const BlockRenderer = ({ blocks }) => {
         )
       }
       case "core/cover": {
-        console.log('BLOCK: ', block);
         return (
           <Cover key={block.id} background={block.attributes.url}>
             <BlockRenderer blocks={block.innerBlocks} />
           </Cover>
         )
       }
-      default:
+      default: {
+        console.log('UNKNOWN: ', block);
         return null;
+      }
     }
   })
 }

@@ -54,7 +54,7 @@ export const getPageStaticProps = async (ctx) => {
     }
   });
 
-  const blocks = cleanAndTransformBlocks(data.nodeByUri.blocksJSON);
+  const blocks = await cleanAndTransformBlocks(data.nodeByUri.blocksJSON);
 
   return {
     props: {
