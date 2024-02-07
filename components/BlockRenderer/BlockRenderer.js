@@ -6,6 +6,7 @@ import { theme } from 'theme';
 import { Columns } from 'components/Columns';
 import { Column } from 'components/Column';
 import { PostTitle } from 'components/PostTitle';
+import { PropertySearch } from 'components/PropertySearch';
 import Image from 'next/image';
 
 export const BlockRenderer = ({ blocks }) => {
@@ -47,6 +48,13 @@ export const BlockRenderer = ({ blocks }) => {
             key={block.id}
             level={block.attributes.level}
             textAlign={block.attributes.textAlign}
+          />
+        )
+      }
+      case "acf/propertysearch": {
+        return (
+          <PropertySearch
+            key={block.id}
           />
         )
       }
