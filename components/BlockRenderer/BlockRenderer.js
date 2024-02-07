@@ -4,6 +4,8 @@ import { Paragraph } from 'components/Paragraph';
 import { CallToActionButton } from 'components/CallToActionButton';
 import { theme } from 'theme';
 import { Columns } from 'components/Columns';
+import { Column } from 'components/Column';
+import Image from 'next/image';
 
 export const BlockRenderer = ({ blocks }) => {
   return blocks.map(block => {
@@ -49,10 +51,31 @@ export const BlockRenderer = ({ blocks }) => {
         return (
           <Columns
             key={block.id}
-            isStackOnMobile={block.attributes.isStackOnMobile}
+            isStackedOnMobile={block.attributes.isStackedOnMobile}
           >
             <BlockRenderer blocks={block.innerBlocks} />
           </Columns>
+        )
+      }
+      case "core/column": {
+        return (
+          <Column
+            key={block.id}
+            width={block.attributes.width}
+          >
+            <BlockRenderer blocks={block.innerBlocks} />
+          </Column>
+        )
+      }
+      case "core/image": {
+        return (
+          <Image
+            key={block.id}
+            src={block.attributes.url}
+            width={block.attributes.originalWidth}
+            height={block.attributes.originalHeight}
+            alt={block.attributes.alt || ''}
+          />
         )
       }
       default: {
