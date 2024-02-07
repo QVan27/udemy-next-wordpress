@@ -15,6 +15,11 @@ export const getPageStaticProps = async (ctx) => {
             title
             blocksJSON
           }
+          ... on Property {
+            id
+            title
+            blocksJSON
+          }
         }
         acfOptionsMainMenu {
           mainMenu {
