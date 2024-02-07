@@ -36,9 +36,14 @@ export const PropertySearch = () => {
     search()
   }, [])
 
+  const handleSearch = ({ hasParking, petFriendly, minPrice, maxPrice }) => {
+    // update our browser's URL
+    // search
+  }
+
   return (
     <div>
-      <Filters />
+      <Filters onSearch={handleSearch} />
       <Results properties={properties} />
       <Pagination onPageClick={handlePageClick} totalPages={Math.ceil(totalResults / pageSize)} />
     </div>
