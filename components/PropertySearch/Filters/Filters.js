@@ -1,15 +1,30 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Input } from 'components/Input'
+import queryString from 'query-string'
 
 export const Filters = ({ onSearch }) => {
   const [hasParking, setHasParking] = useState(false)
   const [petFriendly, setPetFriendly] = useState(false)
   const [minPrice, setMinPrice] = useState('')
   const [maxPrice, setMaxPrice] = useState('')
-  
+
   const handleSearch = () => {
     onSearch({ hasParking, petFriendly, minPrice, maxPrice })
   }
+
+  useEffect(() => {
+    const {
+      petFriendly: petFriendlyInitial,
+      hasParking: hasParkingInitial,
+      minPrice: minPriceInitial,
+      maxPrice: maxPriceInitial
+    } = queryString.parse(window.location.search)
+
+    setHasParking(hasParkingInitial === 'true')
+    setPetFriendly(petFriendlyInitial === 'true')
+    setMinPrice(minPriceInitial || '')
+    setMaxPrice(maxPriceInitial || '')
+  }, [])
 
   return (
     <div className='max-w-5xl mx-auto my-5 flex gap-5 border-solid border-slate-400 border-2 p-5 rounded-md'>
