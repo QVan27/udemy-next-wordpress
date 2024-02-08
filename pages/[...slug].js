@@ -1,7 +1,8 @@
-import client from 'client';
-import { gql } from '@apollo/client';
-import { getPageStaticProps } from 'utils/getPageStaticProps';
-import { Page } from 'components/Page';
+import { gql } from "@apollo/client";
+import client from "client";
+import { BlockRenderer } from "components/BlockRenderer";
+import { getPageStaticProps } from "utils/getPageStaticProps";
+import { Page } from "components/Page";
 
 export default Page;
 
@@ -22,15 +23,17 @@ export const getStaticPaths = async () => {
           }
         }
       }
-    `
+    `,
   });
 
   return {
-    paths: [...data.pages.nodes, ...data.properties.nodes].map((page) => ({
-      params: {
-        slug: page.uri.substring(1, page.uri.length - 1).split('/')
-      }
-    })),
-    fallback: false
+    paths: [...data.pages.nodes, ...data.properties.nodes]
+      .filter((page) => page.uri !== "/")
+      .map((page) => ({
+        params: {
+          slug: page.uri.substring(1, page.uri.length - 1).split("/"),
+        },
+      })),
+    fallback: "blocking",
   };
-}
+};

@@ -9,10 +9,23 @@ import { PostTitle } from 'components/PostTitle';
 import { PropertySearch } from 'components/PropertySearch';
 import Image from 'next/image';
 import { FormspreeForm } from 'components/FormspreeForm';
+import { PropertyFeatures } from 'components/PropertyFeatures';
 
 export const BlockRenderer = ({ blocks }) => {
   return blocks.map(block => {
     switch (block.name) {
+      case "acf/propertyfeatures": {
+        return (
+          <PropertyFeatures
+            key={block.id}
+            price={block.attributes.price}
+            bathrooms={block.attributes.bathrooms}
+            bedrooms={block.attributes.bedrooms}
+            hasParking={block.attributes.has_parking}
+            petFriendly={block.attributes.pet_friendly}
+          />
+        );
+      }
       case "acf/formspreeform": {
         return <FormspreeForm key={block.id} formId={block.attributes.data.form_id} />
       }
@@ -97,15 +110,16 @@ export const BlockRenderer = ({ blocks }) => {
         )
       }
       case "core/image": {
+        console.log('IMAGE BLOCK: ', block);
         return (
           <Image
             key={block.id}
             src={block.attributes.url}
-            width={block.attributes.originalWidth}
-            height={block.attributes.originalHeight}
-            alt={block.attributes.alt || ''}
+            height={block.attributes.height}
+            width={block.attributes.width}
+            alt={block.attributes.alt || ""}
           />
-        )
+        );
       }
       default: {
         console.log('UNKNOWN: ', block);

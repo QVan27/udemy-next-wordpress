@@ -1,10 +1,11 @@
-import client from 'client';
-import { gql } from '@apollo/client';
-import { cleanAndTransformBlocks } from 'utils/cleanAndTransformBlocks';
-import { mapMainMenuItems } from 'utils/mapMainMenuItems';
+import { gql } from "@apollo/client";
+import client from "client";
+import { cleanAndTransformBlocks } from "./cleanAndTransformBlocks";
+import { mapMainMenuItems } from "./mapMainMenuItems";
 
-export const getPageStaticProps = async (ctx) => {
-  const uri = ctx.params?.slug ? `/${ctx.params.slug.join('/')}/` : '/';
+export const getPageStaticProps = async (context) => {
+  console.log("CONTEXT: ", context);
+  const uri = context.params?.slug ? `/${context.params.slug.join("/")}/` : "/";
 
   const { data } = await client.query({
     query: gql`
@@ -13,7 +14,7 @@ export const getPageStaticProps = async (ctx) => {
           ... on Page {
             id
             title
-            blocksJSON
+            blocks(postTemplate: false)
             featuredImage {
               node {
                 sourceUrl
@@ -23,7 +24,18 @@ export const getPageStaticProps = async (ctx) => {
           ... on Property {
             id
             title
-            blocksJSON
+            blocks(postTemplate: false)
+            seo {
+              title
+              metaDesc
+            }
+            propertyFeatures {
+              bathrooms
+              bedrooms
+              hasParking
+              petFriendly
+              price
+            }
             featuredImage {
               node {
                 sourceUrl
@@ -44,7 +56,7 @@ export const getPageStaticProps = async (ctx) => {
             menuItems {
               menuItem {
                 destination {
-                    ... on Page {
+                  ... on Page {
                     uri
                   }
                 }
@@ -52,7 +64,7 @@ export const getPageStaticProps = async (ctx) => {
               }
               items {
                 destination {
-                    ... on Page {
+                  ... on Page {
                     uri
                   }
                 }
@@ -64,20 +76,24 @@ export const getPageStaticProps = async (ctx) => {
       }
     `,
     variables: {
-      uri
-    }
+      uri,
+    },
   });
-
-  const blocks = await cleanAndTransformBlocks(data.nodeByUri.blocksJSON);
-
+  const blocks = cleanAndTransformBlocks(data.nodeByUri.blocks);
+  console.log("BLOCK FROM CLEAN AND TRANSFORM BLOCKS ---------", blocks);
   return {
     props: {
       title: data.nodeByUri.title,
+      propertyFeatures: data.nodeByUri.propertyFeatures || null,
       featuredImage: data.nodeByUri.featuredImage?.node?.sourceUrl || null,
-      mainMenuItems: mapMainMenuItems(data.acfOptionsMainMenu.mainMenu.menuItems),
-      callToActionLabel: data.acfOptionsMainMenu.mainMenu.callToActionButton.label,
-      callToActionDestination: data.acfOptionsMainMenu.mainMenu.callToActionButton.destination.uri,
-      blocks
+      mainMenuItems: mapMainMenuItems(
+        data.acfOptionsMainMenu.mainMenu.menuItems
+      ),
+      callToActionLabel:
+        data.acfOptionsMainMenu.mainMenu.callToActionButton.label,
+      callToActionDestination:
+        data.acfOptionsMainMenu.mainMenu.callToActionButton.destination.uri,
+      blocks,
     },
   };
 };
