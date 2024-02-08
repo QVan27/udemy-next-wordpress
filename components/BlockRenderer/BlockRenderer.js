@@ -10,10 +10,21 @@ import { PropertySearch } from 'components/PropertySearch';
 import Image from 'next/image';
 import { FormspreeForm } from 'components/FormspreeForm';
 import { PropertyFeatures } from 'components/PropertyFeatures';
+import { Gallery } from 'components/Gallery';
 
 export const BlockRenderer = ({ blocks }) => {
   return blocks.map(block => {
     switch (block.name) {
+      case "core/gallery": {
+        return (
+          <Gallery
+            key={block.id}
+            columns={block.attributes.columns || 3}
+            cropImages={block.attributes.imageCrop}
+            items={block.innerBlocks}
+          />
+        )
+      }
       case "acf/propertyfeatures": {
         return (
           <PropertyFeatures
