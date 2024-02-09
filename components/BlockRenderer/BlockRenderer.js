@@ -120,6 +120,8 @@ export const BlockRenderer = ({ blocks }) => {
           <Column
             key={block.id}
             width={block.attributes.width}
+            textColor={theme[block.attributes.textColor] || block.attributes.style?.color?.text}
+            backgroundColor={theme[block.attributes.backgroundColor] || block.attributes.style?.color?.background}
           >
             <BlockRenderer blocks={block.innerBlocks} />
           </Column>
