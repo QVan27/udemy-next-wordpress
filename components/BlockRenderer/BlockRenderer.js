@@ -5,7 +5,6 @@ import { CallToActionButton } from 'components/CallToActionButton';
 import { theme } from 'theme';
 import { Columns } from 'components/Columns';
 import { Column } from 'components/Column';
-import { PostTitle } from 'components/PostTitle';
 import { PropertySearch } from 'components/PropertySearch';
 import Image from 'next/image';
 import { FormspreeForm } from 'components/FormspreeForm';
@@ -68,21 +67,13 @@ export const BlockRenderer = ({ blocks }) => {
           />
         )
       }
+      case "core/post-title":
       case "core/heading": {
         return (
           <Heading
             key={block.id}
             level={block.attributes.level}
             content={block.attributes.content}
-            textAlign={block.attributes.textAlign}
-          />
-        )
-      }
-      case "core/post-title": {
-        return (
-          <PostTitle
-            key={block.id}
-            level={block.attributes.level}
             textAlign={block.attributes.textAlign}
           />
         )

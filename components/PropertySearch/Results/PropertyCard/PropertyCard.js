@@ -8,15 +8,7 @@ export const PropertyCard = ({ title, destination, image, bedrooms, bathrooms, p
   return (
     <Link href={destination} className='border-2 border-slate-300 p-5 block bg-slate-100 hover:bg-slate-200'>
       <div className='flex w-full relative h-[200px]'>
-        <Image
-          src={image}
-          width={300}
-          height={200}
-          style={{
-            objectFit: 'cover',
-          }}
-          alt=''
-        />
+        <Image src={image} fill className='object-cover' alt='' sizes='300px' />
       </div>
       <div className='mt-3 text-lg font-bold'>
         {title}

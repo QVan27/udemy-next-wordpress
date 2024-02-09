@@ -12,14 +12,11 @@ export const Gallery = ({ items, cropImages, columns }) => {
           className='p-5 flex-grow relative'
         >
           <Image
-            className={`${cropImages ? 'h-full' : ''}`}
+            className={`object-cover ${cropImages ? 'h-full' : ''}`}
             src={item.attributes.url}
             alt={item.attributes.alt || 'image'}
             width={item.attributes.width}
             height={item.attributes.height}
-            style={{
-              objectFit: 'cover'
-            }}
           />
         </div>
       ))}
