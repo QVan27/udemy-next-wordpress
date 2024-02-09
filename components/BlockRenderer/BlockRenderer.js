@@ -11,10 +11,18 @@ import Image from 'next/image';
 import { FormspreeForm } from 'components/FormspreeForm';
 import { PropertyFeatures } from 'components/PropertyFeatures';
 import { Gallery } from 'components/Gallery';
+import { TickItem } from 'components/TickItem';
 
 export const BlockRenderer = ({ blocks }) => {
   return blocks.map(block => {
     switch (block.name) {
+      case "acf/tickitem": {
+        return (
+          <TickItem key={block.id}>
+            <BlockRenderer blocks={block.innerBlocks} />
+          </TickItem>
+        )
+      }
       case "core/gallery": {
         return (
           <Gallery
