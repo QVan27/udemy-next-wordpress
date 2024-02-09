@@ -19,7 +19,6 @@ const aboreto = Aboreto({
 
 export default async function RootLayout({ children }) {
   const data = await getMenu()
-  console.log(data)
   return (
     <html lang='en' className={`${poppins.variable} ${aboreto.variable}`}>
       <body className='font-body'>
