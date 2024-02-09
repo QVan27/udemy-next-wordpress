@@ -1,11 +1,11 @@
-import { createContext, useContext } from 'react';
+// import { createContext, useContext } from 'react';
 
-const PageContext = createContext();
+// const PageContext = createContext();
 
-export const PageWrapper = ({ value, children }) => {
-  return <PageContext.Provider value={value}>{children}</PageContext.Provider>;
-}
+// export const PageWrapper = ({ value, children }) => {
+//   return <PageContext.Provider value={value}>{children}</PageContext.Provider>;
+// }
 
-export const usePageContext = () => {
-  return useContext(PageContext);
-}
+// export const usePageContext = () => {
+//   return useContext(PageContext);
+// }
