@@ -1,12 +1,12 @@
 import Image from 'next/image'
-import Link from 'next/link'
+// import Link from 'next/link'
 import numeral from 'numeral'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBed, faBathtub, faCar, faDog } from '@fortawesome/free-solid-svg-icons'
 
 export const PropertyCard = ({ title, destination, image, bedrooms, bathrooms, price, hasParking, petFriendly }) => {
   return (
-    <Link href={destination} className='border-2 border-slate-300 p-5 block bg-slate-100 hover:bg-slate-200'>
+    <a href={destination} className='border-2 border-slate-300 p-5 block bg-slate-100 hover:bg-slate-200'>
       <div className='flex w-full relative h-[200px]'>
         <Image src={image} fill className='object-cover' alt='' sizes='300px' />
       </div>
@@ -44,6 +44,6 @@ export const PropertyCard = ({ title, destination, image, bedrooms, bathrooms, p
           </div>
         </div>
       }
-    </Link>
+    </a>
   )
 }
